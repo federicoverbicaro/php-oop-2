@@ -9,9 +9,13 @@ class Giochi extends Shop{
 
     private $prezzi_giochi = [
 
-        "giocoCane1" => 99,
+        "giocoCane1" => 12.99,
         "gicoGatto1" => 9.99,
         
+    ];
+    private $disponibile_giochi = [
+        "giocoCane1" => true,
+        "gicoGatto1" => false,
     ];
 
     public function __construct($_price, $disponibilita)
@@ -19,12 +23,17 @@ class Giochi extends Shop{
     {
 
         $this->prezzi_giochi[$this->id] = $_price;
-        $this->disponibilita = $disponibilita;
+        $this->disponibile_giochi[$this->id] = $disponibilita;
     }
 
-    public function getPrezzi_Cibo()
+    public function getPrezzi_Giochi()
     {
         return $this->prezzi_giochi;
+    }
+
+    public function getDisponibilita_Giochi()
+    {
+        return $this->disponibile_giochi;
     }
 
 }

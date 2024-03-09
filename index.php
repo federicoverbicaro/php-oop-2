@@ -14,17 +14,21 @@ include './models/giochi.php';
 
 
 //istanza cuccie
-$cuccie = new Cuccie("","","","","");
+$cuccie = new Cuccie("", "", "", "", "");
 $prezzi_cuccie = $cuccie->getPrezzi();
+$disponibilita_cuccie = $cuccie->getDisponibilita();
+
 
 //istanza cibo
-$cibo = new Cibo ("","","","","");
+$cibo = new Cibo("", "", "", "", "");
 $prezzi_ciboAnimols = $cibo->getPrezzi_Cibo();
+$disponibilita_cibo = $cibo->getDisponibilita_Cibo();
 
 
 //istanza giochi
-$cibo = new Giochi ("","","","","");
-$prezzi_giochiAnimols = $cibo->getPrezzi_Cibo();
+$giochi = new Giochi("", "", "", "", "");
+$prezzi_giochiAnimols = $giochi->getPrezzi_Giochi();
+$disponibilita_giochi = $giochi->getDisponibilita_Giochi();
 
 class Shop
 {
@@ -90,7 +94,7 @@ $Prodotti = array(
         </div>
     </header>
 
-    <main>
+    <main >
         <div class="container mt-4 ">
             <ul class="list-unstyled d-flex gap-3 justify-content-center ">
                 <li>
@@ -105,36 +109,66 @@ $Prodotti = array(
         </div>
 
 
-        <div class="container-fluid">
-            <div class="container">
+        <div class="container-fluid mb-5 ">
+            <div class="container d-flex flex-wrap gap-3">
                 <?php foreach ($Prodotti as $prodotto) : ?>
-                    <div class="card p-2 position-relative " style="width: 18rem;">
+                    <div class="card p-2 position-relative  " style="width: 18rem;">
                         <div class="mt-3">
                             <img src="<?= $prodotto->img; ?>" class="card-img-top" alt="...">
                             <div class="position-absolute  end-0 top-0  border border-black rounded-5 p-1 m-2">
                                 <img src="<?= $prodotto->icona; ?>" class="card-img-top" height="30" width="30" alt="icona">
                             </div>
+
                         </div>
 
-                        <div class="card-body">
+
+                        <div class="card-body d-flex justify-content-end  flex-column">
                             <h5 class="card-title"><?= $prodotto->titolo; ?></h5>
-                        </div>
-                        <?php if (array_key_exists($prodotto->id, $prezzi_cuccie)) : ?>
-                            <div>
-                                <span>Prezzo: <?= $prezzi_cuccie[$prodotto->id]; ?></span>
-                            </div>
-                        <?php endif; ?>
-                        <?php if (array_key_exists($prodotto->id, $prezzi_ciboAnimols)) : ?>
-                            <div>
-                                <span>Prezzo: <?= $prezzi_ciboAnimols[$prodotto->id]; ?></span>
-                            </div>
-                        <?php endif; ?>
-                        <?php if (array_key_exists($prodotto->id, $prezzi_giochiAnimols)) : ?>
-                            <div>
-                                <span>Prezzo: <?= $prezzi_giochiAnimols[$prodotto->id]; ?></span>
-                            </div>
-                        <?php endif; ?>
 
+                            <?php if (array_key_exists($prodotto->id, $prezzi_cuccie)) : ?>
+                                <div class="d-flex flex-column ">
+                                    <span>Prezzo: <?= $prezzi_cuccie[$prodotto->id]; ?> $</span>
+
+                                    <?php if ($disponibilita_cuccie[$prodotto->id]) : ?>
+                                        <span class="text-success text-capitalize ">Disponibile</span>
+                                    <?php else : ?>
+                                        <span class="text-danger text-capitalize ">Non disponibile</span>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+
+
+
+                            <?php if (array_key_exists($prodotto->id, $prezzi_ciboAnimols)) : ?>
+                                <div class="d-flex flex-column ">
+                                    <span>Prezzo: <?= $prezzi_ciboAnimols[$prodotto->id]; ?>$</span>
+
+                                    <?php if ($disponibilita_cibo[$prodotto->id]) : ?>
+                                        <span class="text-success text-capitalize ">Disponibile</span>
+                                    <?php else : ?>
+                                        <span class="text-danger text-capitalize "> Non disponibile</span>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+
+
+
+                            <?php if (array_key_exists($prodotto->id, $prezzi_giochiAnimols)) : ?>
+                                <div class="d-flex flex-column ">
+                                    <span>Prezzo: <?= $prezzi_giochiAnimols[$prodotto->id]; ?>$</span>
+
+                                    <?php if ($disponibilita_giochi[$prodotto->id]) : ?>
+                                        <span class="text-success text-capitalize ">Disponibile</span>
+                                    <?php else : ?>
+                                        <span class="text-danger text-capitalize ">Non disponibile</span>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="m-3 d-flex justify-content-center ">
+                            <button class="btn btn-primary p-2 text-capitalize  "> aggiungi al carello</button>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>

@@ -12,11 +12,16 @@ class Cuccie extends Shop
         "cucciaGatto1" => 49.99,
     ];
 
+    private $disponibile = [
+        "cucciaCane1" => true,
+        "cucciaGatto1" => true,
+    ];
+
     public function __construct($_price, $disponibilita)
     {
        
         $this->prezzi[$this->id] = $_price;
-        $this->disponibilita = $disponibilita;
+        $this->disponibile[$this->id] = $disponibilita;
     }
 
     public function getPrezzi()
@@ -26,7 +31,7 @@ class Cuccie extends Shop
 
     public function getDisponibilita()
     {
-        return $this->disponibilita;
+        return $this->disponibile;
     }
 }
 

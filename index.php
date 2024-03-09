@@ -8,6 +8,10 @@
  Stampiamo delle card contenenti i dettagli dei prodotti, come immagine, titolo, prezzo, icona della categoria ed il tipo di articolo che si sta visualizzando (prodotto, cibo, gioco, cuccia). -->
 
 <?php
+
+
+$categoria_selezionata = isset($_GET['categoria']) ? $_GET['categoria'] : '';
+
 include './models/cuccie.php';
 include './models/Cibo.php';
 include './models/giochi.php';
@@ -36,13 +40,15 @@ class Shop
     public $img;
     public $titolo;
     public $icona;
+    public $categoria;
 
-    function __construct($_id, $_img, $_titolo, $_icona)
+    function __construct($_id, $_img, $_titolo, $_icona,$_categoria)
     {
         $this->id = $_id;
         $this->img = $_img;
         $this->titolo = $_titolo;
         $this->icona = $_icona;
+        $this->categoria = $_categoria; 
     }
     public function getId()
     {
@@ -52,21 +58,21 @@ class Shop
 
 $Prodotti = array(
 
-    new Shop("ciboCane1", "./img/PCane1-Photoroom.png-Photoroom.png", "Monge Monoprotein Dog Lattina 400G", "./icons/dog-solid.svg"),
+    new Shop("ciboCane1", "./img/PCane1-Photoroom.png-Photoroom.png", "Monge Monoprotein Dog Lattina 400G", "./icons/dog-solid.svg","cane"),
 
-    new Shop("cucciaGatto1", "./img/gatto cuccia-Photoroom.png-Photoroom.png", "Cuccia Igloo Mimì per Gatto", "./icons/cat-solid.svg"),
+    new Shop("cucciaGatto1", "./img/gatto cuccia-Photoroom.png-Photoroom.png", "Cuccia Igloo Mimì per Gatto", "./icons/cat-solid.svg","gatto"),
 
-    new Shop("giocoCane1", "./img/gioco cane-Photoroom.png-Photoroom.png", "Gioco per Cane Corda Osso", "./icons/dog-solid.svg"),
+    new Shop("giocoCane1", "./img/gioco cane-Photoroom.png-Photoroom.png", "Gioco per Cane Corda Osso", "./icons/dog-solid.svg","cane"),
 
-    new Shop("ciboCane2", "./img/ciboCane2.png", "Natural Trainer Dog Lattina 400G", "./icons/dog-solid.svg"),
+    new Shop("ciboCane2", "./img/ciboCane2.png", "Natural Trainer Dog Lattina 400G", "./icons/dog-solid.svg","cane"),
 
-    new Shop("ciboGatto1", "./img/gatto-Photoroom.png-Photoroom.png", "Next Natural Cat Lattina Multipack 6x50G", "./icons/cat-solid.svg"),
+    new Shop("ciboGatto1", "./img/gatto-Photoroom.png-Photoroom.png", "Next Natural Cat Lattina Multipack 6x50G", "./icons/cat-solid.svg","gatto"),
 
-    new Shop("gicoGatto1", "./img/gioco gatto-Photoroom.png-Photoroom.png", "Pallina per Gatto in Peluche Bianca", "./icons/cat-solid.svg"),
+    new Shop("gicoGatto1", "./img/gioco gatto-Photoroom.png-Photoroom.png", "Pallina per Gatto in Peluche Bianca", "./icons/cat-solid.svg","gatto"),
 
-    new Shop("cucciaCane1", "./img/cane cuccia-Photoroom.png-Photoroom.png", "Canile in Legno Habitat", "./icons/dog-solid.svg"),
+    new Shop("cucciaCane1", "./img/cane cuccia-Photoroom.png-Photoroom.png", "Canile in Legno Habitat", "./icons/dog-solid.svg","cane"),
 
-    new Shop("ciboGatto2", "./img/gatto2-Photoroom.png-Photoroom.png", "Felix Le Ghiottonerie Cat Busta Multipack 80x85G", "./icons/cat-solid.svg")
+    new Shop("ciboGatto2", "./img/gatto2-Photoroom.png-Photoroom.png", "Felix Le Ghiottonerie Cat Busta Multipack 80x85G", "./icons/cat-solid.svg","gatto")
 
 
 
@@ -98,10 +104,10 @@ $Prodotti = array(
         <div class="container mt-4 ">
             <ul class="list-unstyled d-flex gap-3 justify-content-center ">
                 <li>
-                    <a class="text-decoration-none text-capitalize text-black fs-4 " href="">cani</a>
+                    <a class="text-decoration-none text-capitalize text-black fs-4 " href="?categoria=cane">cani</a>
                 </li>
                 <li>
-                    <a class="text-decoration-none text-capitalize text-black fs-4" href="">gatti</a>
+                    <a class="text-decoration-none text-capitalize text-black fs-4" href="?categoria=gatto">gatti</a>
                 </li>
 
             </ul>
@@ -111,7 +117,11 @@ $Prodotti = array(
 
         <div class="container-fluid mb-5 ">
             <div class="container d-flex flex-wrap gap-3">
+                
                 <?php foreach ($Prodotti as $prodotto) : ?>
+                    
+                   
+                    <?php if (empty($categoria_selezionata) || $prodotto->categoria === $categoria_selezionata) : ?>
                     <div class="card p-2 position-relative  " style="width: 18rem;">
                         <div class="mt-3">
                             <img src="<?= $prodotto->img; ?>" class="card-img-top" alt="...">
@@ -170,6 +180,7 @@ $Prodotti = array(
                             <button class="btn btn-primary p-2 text-capitalize  "> aggiungi al carello</button>
                         </div>
                     </div>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </div>
         </div>

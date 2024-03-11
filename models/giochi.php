@@ -1,11 +1,16 @@
 <?php
-
+require_once __DIR__ . '/../traits/Amount.php';
+require_once __DIR__ . '/Shop.php';
 class Giochi extends Shop{
+
+    
 
     public $id;
     private $price;
     public $disponibilita;
 
+
+    use Amount;
 
     private $prezzi_giochi = [
 
@@ -18,12 +23,15 @@ class Giochi extends Shop{
         "gicoGatto1" => false,
     ];
 
-    public function __construct($_price, $disponibilita)
 
-    {
+    public function __construct($_id,$_price, $disponibilita)
 
+    { 
+        
+        $this->id = $_id;
         $this->prezzi_giochi[$this->id] = $_price;
         $this->disponibile_giochi[$this->id] = $disponibilita;
+        $this->setQuantita($_id, 0);
     }
 
     public function getPrezzi_Giochi()
@@ -35,5 +43,8 @@ class Giochi extends Shop{
     {
         return $this->disponibile_giochi;
     }
+
+   
+   
 
 }

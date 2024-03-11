@@ -1,9 +1,13 @@
 <?php
+require_once __DIR__ . '/../traits/Amount.php';
+require_once __DIR__ . '/Shop.php';
 class Cibo extends Shop
 {
     public $id;
     private $price;
     public $disponibilita;
+
+    use Amount;
 
 
     private $prezzi_cibo = [
@@ -20,13 +24,15 @@ class Cibo extends Shop
         "ciboGatto1" => true,
         "ciboGatto2" => false,
     ];
+   
 
-    public function __construct($_price, $disponibilita)
+    public function __construct($_id,$_price, $disponibilita)
 
     {
-
+        $this->id = $_id;
         $this->prezzi_cibo[$this->id] = $_price;
         $this->disponibile_Cibo[$this->id] = $disponibilita;
+        $this->setQuantita($_id, 0);
     }
 
     public function getPrezzi_Cibo()
